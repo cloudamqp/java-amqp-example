@@ -50,6 +50,7 @@ This should create the project directories, your "pom.xml" and the associated te
 
 It creates class called App.java that would be the main entry point for your application. You can change/remove/rename this to any specific naming convention that you follow. Here's a quick look at the App.java that maven creates:
 
+    :::java
     package com.myexamples;
     
     /**
@@ -194,4 +195,14 @@ To look at the application logs, runt he command:
 
     :::term
     $ heroku logs --tail
+
+# Types of Worker processes
+
+The article covered how to get started with a simple Java worker process. A worker process can be executed in 3 contexts on Heroku:
+
+1. A long running java application that is waiting on events (either through a database or a message queue)
+2. A scheduled java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
+3. A one time execution i.e. 1 off admin process.
+
+Each of these contexts are valid uses of a worker process and depending on your use case your could choose to use one of them for your application.
 
