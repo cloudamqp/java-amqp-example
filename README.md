@@ -22,6 +22,16 @@ A java worker process on Heroku comprises of 4 parts:
 3. How to assemble your application with Maven
 4. How to invoke your worker using the Procfile
 
+### Types of Worker processes
+
+This article covers how to get started with a simple Java worker process. A worker process can be executed in 3 contexts on Heroku:
+
+1. A long running java application that is waiting on events (either through a database or a message queue)
+2. A scheduled java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
+3. A [one time admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps)
+
+Each of these contexts are valid uses of a worker process and depending on your use case your could choose to use one of them for your application.
+
 ## Create an application if you don't already have one
 
 To start, we need a simple Java project. You can create this using the mvn:create archetype.
@@ -66,7 +76,7 @@ It creates class called App.java that would be the main entry point for your app
     }
 
 
-## Configure Maven
+## Configuring Maven
 
 You can now open your pom.xml and add any dependencies to your Java application. In addition to your dependencies you also should add the [maven appassembler](http://mojo.codehaus.org/appassembler/appassembler-maven-plugin/) plugin to your pom.xml.
 
@@ -191,18 +201,8 @@ Congratulations! Your  app should now be up and running on Heroku. To check the 
     :::term
     $ heroku ps
     
-To look at the application logs, runt he command:
+To look at the application logs, run the command:
 
     :::term
     $ heroku logs --tail
-
-# Types of Worker processes
-
-The article covered how to get started with a simple Java worker process. A worker process can be executed in 3 contexts on Heroku:
-
-1. A long running java application that is waiting on events (either through a database or a message queue)
-2. A scheduled java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
-3. A one time execution i.e. 1 off admin process.
-
-Each of these contexts are valid uses of a worker process and depending on your use case your could choose to use one of them for your application.
 
