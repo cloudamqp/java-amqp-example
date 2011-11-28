@@ -151,43 +151,71 @@ Create the app on the Cedar stack:
 
     :::term
     $ heroku create --stack cedar
-    Creating high-lightning-129... done, stack is cedar
-    http://high-lightning-129.herokuapp.com/ | git@heroku.com:high-lightning-129.git
+    Creating empty-fire-9222... done, stack is cedar
+    http://empty-fire-9222.herokuapp.com/ | git@heroku.com:empty-fire-9222.git
     Git remote heroku added
 
 Deploy your code:
 
     :::term
-    Counting objects: 227, done.
-    Delta compression using up to 4 threads.
-    Compressing objects: 100% (117/117), done.
-    Writing objects: 100% (227/227), 101.06 KiB, done.
-    Total 227 (delta 99), reused 220 (delta 98)
-
-    -----> Heroku receiving push
-    -----> Java app detected
-    -----> Installing Maven 3.0.3..... done
-    -----> Installing settings.xml..... done
-    -----> executing .maven/bin/mvn -B -Duser.home=/tmp/build_1jems2so86ck4 -s .m2/settings.xml -DskipTests=true clean install
-           [INFO] Scanning for projects...
-           [INFO]                                                                         
-           [INFO] ------------------------------------------------------------------------
-           [INFO] Building petclinic 0.1.0.BUILD-SNAPSHOT
-           [INFO] ------------------------------------------------------------------------
-           ...
-           [INFO] ------------------------------------------------------------------------
-           [INFO] BUILD SUCCESS
-           [INFO] ------------------------------------------------------------------------
-           [INFO] Total time: 36.612s
-           [INFO] Finished at: Tue Aug 30 04:03:02 UTC 2011
-           [INFO] Final Memory: 19M/287M
-           [INFO] ------------------------------------------------------------------------
-    -----> Discovering process types
-           Procfile declares types -> worker
-    -----> Compiled slug size is 62.7MB
-    -----> Launching... done, v5
-           http://pure-window-800.herokuapp.com deployed to Heroku
-
+    $ git push heroku master
+        Counting objects: 66, done.
+        Delta compression using up to 2 threads.
+        Compressing objects: 100% (31/31), done.
+        Writing objects: 100% (66/66), 15.74 KiB, done.
+        Total 66 (delta 10), reused 30 (delta 9)
+        
+        -----> Heroku receiving push
+        -----> Java app detected
+        -----> Installing Maven 3.0.3..... done
+        -----> Installing settings.xml..... done
+        -----> executing /app/tmp/repo.git/.cache/.maven/bin/mvn -B -Duser.home=/tmp/build_14lc6nws0m7oc -Dmaven.repo.local=/app/tmp/repo.git/.cache/.m2/repository -s /app/tmp/repo.git/.cache/.m2/settings.xml -DskipTests=true clean install
+       [INFO] Scanning for projects...
+       [INFO]
+       [INFO] ------------------------------------------------------------------------
+       [INFO] Building herokujavaworker 1.0-SNAPSHOT
+       [INFO] ------------------------------------------------------------------------
+       [INFO]
+       [INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ herokujavaworker ---
+       [INFO] Deleting /tmp/build_14lc6nws0m7oc/target
+       [INFO]
+       [INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ herokujavaworker ---
+       [INFO] Using 'UTF-8' encoding to copy filtered resources.
+       [INFO] skip non existing resourceDirectory /tmp/build_14lc6nws0m7oc/src/main/resources
+       [INFO]
+       [INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ herokujavaworker ---
+       [INFO] Compiling 1 source file to /tmp/build_14lc6nws0m7oc/target/classes
+       [INFO]
+       [INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ herokujavaworker ---
+       [INFO] Using 'UTF-8' encoding to copy filtered resources.
+       [INFO] skip non existing resourceDirectory /tmp/build_14lc6nws0m7oc/src/test/resources
+       [INFO]
+       [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ herokujavaworker ---
+       [INFO] Compiling 1 source file to /tmp/build_14lc6nws0m7oc/target/test-classes
+       [INFO]
+       [INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ herokujavaworker ---
+       [INFO] Tests are skipped.
+       [INFO]
+       [INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ herokujavaworker ---
+       [INFO] Building jar: /tmp/build_14lc6nws0m7oc/target/herokujavaworker-1.0-SNAPSHOT.jar
+       [INFO]
+       [INFO] --- appassembler-maven-plugin:1.1.1:assemble (default) @ herokujavaworker ---
+       [INFO]
+       [INFO] --- maven-install-plugin:2.3.1:install (default-install) @ herokujavaworker ---
+       [INFO] Installing /tmp/build_14lc6nws0m7oc/target/herokujavaworker-1.0-SNAPSHOT.jar to /app/tmp/repo.git/.cache/.m2/repository/com/myexamples/herokujavaworker/1.0-SNAPSHOT/herokujavaworker-1.0-SNAPSHOT.jar
+       [INFO] Installing /tmp/build_14lc6nws0m7oc/pom.xml to /app/tmp/repo.git/.cache/.m2/repository/com/myexamples/herokujavaworker/1.0-SNAPSHOT/herokujavaworker-1.0-SNAPSHOT.pom
+       [INFO] ------------------------------------------------------------------------
+       [INFO] BUILD SUCCESS
+       [INFO] ------------------------------------------------------------------------
+       [INFO] Total time: 3.513s
+       [INFO] Finished at: Mon Nov 28 15:44:32 UTC 2011
+       [INFO] Final Memory: 12M/490M
+       [INFO] ------------------------------------------------------------------------
+        -----> Discovering process types
+               Procfile declares types -> worker
+        -----> Compiled slug size is 12K
+        -----> Launching... done, v5
+           http://empty-fire-9222.herokuapp.com deployed to Heroku
 
 Congratulations! Your  app should now be up and running on Heroku. To look at the application logs, run the command:
 
