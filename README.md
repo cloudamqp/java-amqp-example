@@ -176,32 +176,32 @@ Deploy your code:
        [INFO] Building herokujavaworker 1.0-SNAPSHOT
        [INFO] ------------------------------------------------------------------------
        [INFO]
-       [INFO] --- Maven-clean-plugin:2.4.1:clean (default-clean) @ herokujavaworker ---
+       [INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ herokujavaworker ---
        [INFO] Deleting /tmp/build_14lc6nws0m7oc/target
        [INFO]
-       [INFO] --- Maven-resources-plugin:2.4.3:resources (default-resources) @ herokujavaworker ---
+       [INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ herokujavaworker ---
        [INFO] Using 'UTF-8' encoding to copy filtered resources.
        [INFO] skip non existing resourceDirectory /tmp/build_14lc6nws0m7oc/src/main/resources
        [INFO]
-       [INFO] --- Maven-compiler-plugin:2.3.2:compile (default-compile) @ herokujavaworker ---
+       [INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ herokujavaworker ---
        [INFO] Compiling 1 source file to /tmp/build_14lc6nws0m7oc/target/classes
        [INFO]
-       [INFO] --- Maven-resources-plugin:2.4.3:testResources (default-testResources) @ herokujavaworker ---
+       [INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ herokujavaworker ---
        [INFO] Using 'UTF-8' encoding to copy filtered resources.
        [INFO] skip non existing resourceDirectory /tmp/build_14lc6nws0m7oc/src/test/resources
        [INFO]
-       [INFO] --- Maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ herokujavaworker ---
+       [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ herokujavaworker ---
        [INFO] Compiling 1 source file to /tmp/build_14lc6nws0m7oc/target/test-classes
        [INFO]
-       [INFO] --- Maven-surefire-plugin:2.7.2:test (default-test) @ herokujavaworker ---
+       [INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ herokujavaworker ---
        [INFO] Tests are skipped.
        [INFO]
-       [INFO] --- Maven-jar-plugin:2.3.1:jar (default-jar) @ herokujavaworker ---
+       [INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ herokujavaworker ---
        [INFO] Building jar: /tmp/build_14lc6nws0m7oc/target/herokujavaworker-1.0-SNAPSHOT.jar
        [INFO]
        [INFO] --- appassembler-Maven-plugin:1.1.1:assemble (default) @ herokujavaworker ---
        [INFO]
-       [INFO] --- Maven-install-plugin:2.3.1:install (default-install) @ herokujavaworker ---
+       [INFO] --- maven-install-plugin:2.3.1:install (default-install) @ herokujavaworker ---
        [INFO] Installing /tmp/build_14lc6nws0m7oc/target/herokujavaworker-1.0-SNAPSHOT.jar to /app/tmp/repo.git/.cache/.m2/repository/com/myexamples/herokujavaworker/1.0-SNAPSHOT/herokujavaworker-1.0-SNAPSHOT.jar
        [INFO] Installing /tmp/build_14lc6nws0m7oc/pom.xml to /app/tmp/repo.git/.cache/.m2/repository/com/myexamples/herokujavaworker/1.0-SNAPSHOT/herokujavaworker-1.0-SNAPSHOT.pom
        [INFO] ------------------------------------------------------------------------
