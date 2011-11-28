@@ -183,7 +183,7 @@ Deploy your code:
            [INFO] Final Memory: 19M/287M
            [INFO] ------------------------------------------------------------------------
     -----> Discovering process types
-           Procfile declares types -> web
+           Procfile declares types -> worker
     -----> Compiled slug size is 62.7MB
     -----> Launching... done, v5
            http://pure-window-800.herokuapp.com deployed to Heroku
@@ -193,4 +193,13 @@ Congratulations! Your  app should now be up and running on Heroku. To look at th
 
     :::term
     $ heroku logs --tail
+
+### Scaling your workers
+
+You can now scale your worker process using the command:
+
+    :::term
+    $ heroku scale worker=5
+
+Scaling your worker process is beneficial only when your worker is a long running java application that is listening on events. A good example of this is a worker process that's listening for messages on a message queue (e.g. Redis, Rabbit MQ etc.). By scaling your workers you can now have more listeners and thereby consume and process more messages simultaneously.
 
