@@ -17,15 +17,15 @@ The non-web component of your application is called a [Worker](http://devcenter.
 A java worker process on Heroku comprises of 3 parts:
 
 1. Application code
-2. A maven build file (pom.xml) that defines the dependencies and how to assemble the application
+2. A Maven build file (`pom.xml`) that defines the dependencies and how to assemble the application
 3. A Procfile defining how the process is launched
 
 ### Types of Worker processes
 
 This article covers how to get started with a simple Java worker process. A worker process can be executed in 3 contexts on Heroku:
 
-1. A long running java application that is waiting on events (either through a database or a message queue)
-2. A scheduled java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
+1. A long running Java application that is waiting on events (either through a database or a message queue)
+2. A scheduled Java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
 3. A [one time admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps)
 
 Each of these contexts are valid uses of a worker process and depending on your use case your could choose to use one of them for your application.
@@ -56,7 +56,7 @@ This should create the project directories, your "pom.xml" and the associated te
     ¦                       AppTest.java
 
 
-A class called App.java is also created. This is the main entry point for the application. You can change/remove/rename this to any specific naming convention that you want to follow. The App.java that maven creates will look like:
+A class called `App.java` is also created. This is the main entry point for the application. You can change/remove/rename this to any specific naming convention that you want to follow. The `App.java` that Maven creates will look like:
 
     :::java
     package com.myexamples;
@@ -78,7 +78,7 @@ A class called App.java is also created. This is the main entry point for the ap
 
 
 
-You can now open your pom.xml and add any dependencies to your Java application. In addition add the [maven appassembler](http://mojo.codehaus.org/appassembler/appassembler-maven-plugin/) plugin to the pom.xml:
+You can now open your `pom.xml` and add any dependencies to your Java application. In addition add the [maven appassembler](http://mojo.codehaus.org/appassembler/appassembler-maven-plugin/) plugin to the `pom.xml`:
 
     <build>
       <plugins>
@@ -111,7 +111,7 @@ You can now open your pom.xml and add any dependencies to your Java application.
 
 The app assembler plugin generates a convenient launch script for starting your application.
 
-Note that the mainClass tag points to the class that launches the application. In the application described above that is App.java, but it would need to be changed for another application.
+Note that the mainClass tag points to the class that launches the application. In the application described above that is `App.java`, but it would need to be changed for another application.
 
 Now that the application is ready to be run as a worker any other business logic can be added as long as it is bootstrapped from the main class. 
 
@@ -123,12 +123,12 @@ To build your application simply run:
     :::term
     $ mvn install
 
-This compiles your java classes and also generates a script called "app.sh" that you can use to run your Java application. To run the applicaiton use the command:
+This compiles your Java classes and also generates a script called "app.sh" that you can use to run your Java application. To run the applicaiton use the command:
 
     :::term
     $ sh target/bin/app.sh
 
-That's it. You are now ready to deploy this java application to Heroku.
+That's it. You are now ready to deploy this Java application to Heroku.
 
 # Deploy your Application to Heroku
 
