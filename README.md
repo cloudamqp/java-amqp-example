@@ -1,11 +1,16 @@
-# Run Java worker processes on Heroku
+# Run non-web Java application on Heroku
 
 Some applications can benifit from splitting logic into two components:
 
 1. A web component that is consumed by the end-user
 2. A non-web component or background process to supplement the web component.
 
-The non-web component of your application is called a [Worker](http://devcenter.heroku.com/articles/process-model#mapping_the_unix_process_model_to_web_apps) process in Heroku.  This article is going to talk about getting started on the running a Java worker process in your Heroku environment.
+The non-web component of your application can be executed in three different contexts within Heroku:
+
+1. A long running application called a [Worker](http://devcenter.heroku.com/articles/process-model#mapping_the_unix_process_model_to_web_apps), that is waiting on events (either on a database or from a message queue)
+2. A scheduled Java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
+3. A [one time admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps)
+
 
 ## Prerequisites
 
@@ -14,21 +19,12 @@ The non-web component of your application is called a [Worker](http://devcenter.
 
 ## Components of a Java worker process
 
-A Java worker process on Heroku comprises of 3 parts:
+A non-web Java application worker on Heroku comprises of 3 parts:
 
 1. Application code
 2. A Maven build file (`pom.xml`) that defines the dependencies and how to assemble the application
 3. A Procfile defining how the process is launched
 
-### Types of Worker processes
-
-This article covers how to get started with a simple Java worker process. A worker process can be executed in 3 contexts on Heroku:
-
-1. A long running Java application that is waiting on events (either through a database or a message queue)
-2. A scheduled Java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
-3. A [one time admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps)
-
-Each of these contexts are valid uses of a worker process and depending on your use case your could choose to use one of them for your application.
 
 ## Create an application if you don't already have one
 
@@ -58,7 +54,7 @@ This should create the project directories, your "pom.xml" and the associated te
 
 A class called `App.Java` is also created. This is the main entry point for the application. You can change/remove/rename this to any specific naming convention that you want to follow. The `App.Java` that Maven creates will look like:
 
-    :::Java
+    :::java
     package com.myexamples;
     
     /**
@@ -73,9 +69,84 @@ A class called `App.Java` is also created. This is the main entry point for the 
         }
     }
 
+## Worker processes on Heroku
+
+For you application to run as a "worker" process your  Java class would look like:
+
+    :::java
+    package com.myexamples;
+    
+    /**
+     * Hello world!
+     *
+     */
+    public class JavaWorker 
+    {
+        public static void main( String[] args )
+        {
+            try{
+                
+                //initializeApplication
+                
+                while(true){
+                
+                    //getTriggeringEvent
+                    
+                    //performApplicationLogic
+                
+                }
+            }catch(RuntimeException ex){
+                
+                //tryToHandleTheError
+                
+                //If error is not expected
+                //System.exit(APP_ERROR_CODE);
+                
+            }finally{
+                //Do any aplication cleanup (closing db connections etc.)
+            }
+        }    
+
+    }
+
+## Scheduled and 1 off admin processes on Heroku
+
+For you application to run as a scheduled or 1 off admin process your  Java class would look like:
+
+    :::java
+    package com.myexamples;
+    
+    /**
+     * Hello world!
+     *
+     */
+    public class ScheduledOrAdminJavaApp 
+    {
+        public static void main( String[] args )
+        {
+            try{
+                
+                //initializeApplication
+                
+                //performApplicationLogic
+            
+            }catch(RuntimeException ex){
+
+                //tryToHandleTheError
+                
+                //If error is not expected
+                //System.exit(APP_ERROR_CODE);
+                
+            }finally{
+            
+                //Do any aplication cleanup (closing db connections etc.)
+            
+            }
+        }    
+
+    }
 
 ## Configuring Maven
-
 
 
 You can now open your `pom.xml` and add any dependencies to your Java application. In addition add the [Maven appassembler](http://mojo.codehaus.org/appassembler/appassembler-Maven-plugin/) plugin to the `pom.xml`:
