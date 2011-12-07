@@ -156,7 +156,7 @@ You can now open your `pom.xml` and add any dependencies to your Java applicatio
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
             <artifactId>appassembler-Maven-plugin</artifactId>
-    	    <version>1.1.1</version>
+            <version>1.1.1</version>
     	    <configuration> 
       		  <assembleDirectory>target</assembleDirectory> 
       		  <programs>
