@@ -34,8 +34,12 @@
           <extraJvmArguments>-Xmx256m</extraJvmArguments>
           <programs>
               <program>
-                  <mainClass>com.myexamples.App</mainClass>
-                  <name>app</name>
+                  <mainClass>com.myexamples.JavaWorker</mainClass>
+                  <name>java-worker</name>
+              </program>
+              <program>
+                  <mainClass>com.myexamples.ScheduledOrAdminJavaApp.java</mainClass>
+                  <name>scheduled-java</name>
               </program>
           </programs>
         </configuration>
