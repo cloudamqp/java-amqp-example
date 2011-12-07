@@ -159,8 +159,6 @@ You can now open your `pom.xml` and add any dependencies to your Java applicatio
     	    <version>1.1.1</version>
     	    <configuration> 
       		  <assembleDirectory>target</assembleDirectory> 
-      		  <generateRepository>false</generateRepository>
-      		  <extraJvmArguments>-Xmx256m</extraJvmArguments>
       		  <programs>
       			  <program>
       				  <mainClass>com.myexamples.App</mainClass>
@@ -192,12 +190,18 @@ Now that the application is ready to be run as a worker any other business logic
 To build your application simply run:
 
     :::term
-    $ mvn install
+    $ mvn package
 
 This compiles your Java classes and also generates a script called "app.sh" that you can use to run your Java application. To run the applicaiton use the command:
 
     :::term
     $ sh target/bin/app.sh
+
+If you are a windows users, you can do:
+
+    :::term
+    C:\YourProject>cd target\bin
+    C:\YourProject>app.bat
 
 That's it. You are now ready to deploy this Java application to Heroku.
 
@@ -215,6 +219,7 @@ You declare how you want your application executed in `Procfile` in the project 
 Commit your changes to Git:
 
     :::term
+    $ git init
     $ git add .
     $ git commit -m "Ready to deploy"
 
