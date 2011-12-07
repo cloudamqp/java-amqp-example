@@ -1,7 +1,7 @@
 package com.heroku.javaworker;
 
 /**
- * Hello world!
+ * Scheduled Java
  *
  */
 public class ScheduledOrAdminJavaApp 
