@@ -185,11 +185,13 @@ This compiles your Java classes and also generates a script called "app.sh" that
 
     :::term
     $ sh target/bin/java-worker.sh
+    worker application running...
     
 If you are a windows users, you can do:
 
     :::term
     C:\YourProject>target\bin\java-worker.bat
+    worker application running...
 
 That's it. You are now ready to deploy this Java application to Heroku.
 
@@ -277,6 +279,7 @@ If your process is a one-off admin process that you wish to run manually on an a
     :::term
     $ heroku run admin
     Running admin attached to terminal...
+    Admin task run.
 
 #### Scheduled processes
 
