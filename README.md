@@ -255,12 +255,7 @@ Deploy your code:
     -----> Launching... done, v5
        http://empty-fire-9222.herokuapp.com deployed to Heroku
 
-Congratulations! Your  app should now be up and running on Heroku. To look at the application logs, run the command:
-
-    :::term
-    $ heroku logs --tail
     
-
 ### Running your processes on Heroku
 
 #### Worker processes
@@ -271,8 +266,12 @@ If your process is a worker you can now start and scale it using a command like 
     $ heroku scale worker=1
     Scaling worker processes... done, now running 1
 
-By scaling your workers to more than one dyno you can have more listeners and thereby consume and process more messages simultaneously.
+By scaling your workers to more than one dyno you can have more listeners and thereby consume and process more messages simultaneously. To look at the logs for your worker process, you can use the command:
 
+    :::term
+    $ heroku logs --tail
+    worker application running...
+    
 #### Admin processes
 
 If your process is a one-off admin process that you wish to run manually on an as needed basis you can do so with the `heroku run` command:
