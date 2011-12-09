@@ -203,6 +203,7 @@ You declare how you want your application executed in `Procfile` in the project 
 
     :::term
     worker: sh target/bin/java-worker
+    admin: sh target/bin/scheduled-java
 
 ## Deploy to Heroku
 
