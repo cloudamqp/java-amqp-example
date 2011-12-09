@@ -184,7 +184,7 @@ To build your application simply run:
 This compiles your Java classes and also generates a script called "app.sh" that you can use to run your Java application. To run the applicaiton use the command:
 
     :::term
-    $ sh target/bin/java-worker.sh
+    $ sh target/bin/java-worker
     worker application running...
     
 If you are a windows users, you can do:
