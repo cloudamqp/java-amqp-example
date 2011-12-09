@@ -3,9 +3,9 @@
 Some applications can benifit from splitting logic into multiple components:
 
 1. A web component that is consumed by the end-user
-2. A non-web component or background process to supplement the web component.
+2. One or more non-web components or background processes to supplement the web component.
 
-The non-web component of your application can be executed in three different contexts within Heroku:
+A non-web component of your application can be executed in three different contexts within Heroku:
 
 1. A long running application called a [Worker](http://devcenter.heroku.com/articles/process-model#mapping_the_unix_process_model_to_web_apps), that is waiting on events (either on a database or from a message queue)
 2. A scheduled Java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
@@ -54,7 +54,7 @@ A class called `App.Java` is also created which serves as the main entry point f
 
 ## Worker processes on Heroku
 
-For your application to run as a "worker" process your  Java class would look like:
+For your application to run as a "worker" process your Java class would look like:
 
     :::java
     package com.heroku.javaworker;
@@ -171,7 +171,7 @@ The app assembler plugin generates a convenient launch script for starting your 
 
 Note that the mainClass tag points to the class that launches the application. In the application described above that is `JavaWorker.java`, but it would need to be changed for another application.
 
-Now that the application is ready to be run as a worker any other business logic can be added as long as it is bootstrapped from the main class. 
+As shown above a single `pom.xml` can define multiple worker, scheduled, or admin processes. Now that the application is ready to be run as a worker any other business logic can be added as long as it is bootstrapped from the main class. 
 
 
 ## Run your Application
@@ -203,8 +203,7 @@ You declare how you want your application executed in `Procfile` in the project 
 
     :::term
     worker: sh target/bin/java-worker
-    admin: sh target/bin/scheduled-java
-
+    
 ## Deploy to Heroku
 
 Commit your changes to Git:
@@ -279,7 +278,7 @@ By scaling your workers to more than one dyno you can have more listeners and th
 If your process is a one-off admin process that you wish to run manually on an as needed basis you can do so with the `heroku run` command:
 
     :::term
-    $ heroku run admin
+    $ heroku run "sh target/bin/scheduled-java"
     Running admin attached to terminal...
     Admin task run.
 
@@ -296,4 +295,4 @@ Then you can manage your scheduled tasks from the scheduler web console. Open th
     :::term
     $ heroku addons:open scheduler
 
-The web console will allow you to specify the name of your scheduled process and the frequency with which you'd like it to run.
+The web console will allow you to specify the command to run for your scheduled process and the frequency with which you'd like it to run.
