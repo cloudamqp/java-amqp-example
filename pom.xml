@@ -36,7 +36,7 @@
                   <name>java-worker</name>
               </program>
               <program>
-                  <mainClass>com.heroku.javaworker.ScheduledOrAdminJavaApp.java</mainClass>
+                  <mainClass>com.heroku.javaworker.ScheduledOrAdminJavaApp</mainClass>
                   <name>scheduled-java</name>
               </program>
           </programs>
