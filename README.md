@@ -259,6 +259,7 @@ Congratulations! Your  app should now be up and running on Heroku. To look at th
 
     :::term
     $ heroku logs --tail
+    
 
 ### Running your processes on Heroku
 
