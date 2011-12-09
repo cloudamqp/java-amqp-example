@@ -30,15 +30,13 @@
         <version>1.1.1</version>
         <configuration> 
           <assembleDirectory>target</assembleDirectory> 
-          <generateRepository>false</generateRepository>
-          <extraJvmArguments>-Xmx256m</extraJvmArguments>
           <programs>
               <program>
-                  <mainClass>com.myexamples.JavaWorker</mainClass>
+                  <mainClass>com.heroku.javaworker.JavaWorker</mainClass>
                   <name>java-worker</name>
               </program>
               <program>
-                  <mainClass>com.myexamples.ScheduledOrAdminJavaApp.java</mainClass>
+                  <mainClass>com.heroku.javaworker.ScheduledOrAdminJavaApp.java</mainClass>
                   <name>scheduled-java</name>
               </program>
           </programs>
