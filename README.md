@@ -202,7 +202,7 @@ That's it. You are now ready to deploy this Java application to Heroku.
 You declare how you want your application executed in `Procfile` in the project root. Create this file with a single line:
 
     :::term
-    worker: sh target/bin/java-worker.sh
+    worker: sh target/bin/java-worker
 
 ## Deploy to Heroku
 
