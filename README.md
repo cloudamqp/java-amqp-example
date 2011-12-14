@@ -95,7 +95,7 @@ A simple app that demonstrates the one-off and worker process types can be creat
 
 The app assembler plugin generates a convenient launch script for starting your application. A single `pom.xml` can define multiple web, worker or admin processes. 
 
-## Run your Application
+## Run Locally
 
 To build your application simply run:
 
@@ -119,7 +119,7 @@ Run the worker with:
     
 That's it. You are now ready to deploy to Heroku.
 
-# Deploy your Application to Heroku
+## Deploy to Heroku
 
 ## Create a Procfile
 
@@ -182,9 +182,7 @@ Deploy your code:
        http://empty-fire-9222.herokuapp.com deployed to Heroku
 
     
-### Running your processes on Heroku
-
-#### Worker processes
+## Scaling Worker Processes
 
 If your process is a worker you can now start and scale it using a command like this:
 
@@ -194,30 +192,44 @@ If your process is a worker you can now start and scale it using a command like 
 
 By scaling your workers to more than one dyno you can have more listeners and thereby consume and process more messages simultaneously. To look at the logs for your worker process, you can use the command:
 
-    :::term
     $ heroku logs --tail
-    worker application running...
+    2011-12-14T00:52:26+00:00 heroku[slugc]: Slug compilation started
+    2011-12-14T00:52:54+00:00 heroku[web.1]: State changed from created to down
+    2011-12-14T00:52:55+00:00 heroku[slugc]: Slug compilation finished
+    2011-12-14T00:53:17+00:00 heroku[worker.1]: State changed from created to starting
+    2011-12-14T00:53:17+00:00 heroku[api]: Scale to worker=1 by jesper@heroku.com
+    2011-12-14T00:53:17+00:00 heroku[worker.1]: Starting process with command `sh target/bin/worker`
+    2011-12-14T00:53:18+00:00 heroku[worker.1]: State changed from starting to up
+    2011-12-14T00:53:19+00:00 app[worker.1]: Worker process woke up
+    2011-12-14T00:53:20+00:00 app[worker.1]: Worker process woke up
+    2011-12-14T00:53:21+00:00 app[worker.1]: Worker process woke up
     
-#### Admin processes
+## One-Off processes
 
 If your process is a one-off admin process that you wish to run manually on an as needed basis you can do so with the `heroku run` command:
 
     :::term
-    $ heroku run "sh target/bin/scheduled-java"
-    Running admin attached to terminal...
-    Admin task run.
+    $ heroku run "sh target/bin/oneoff"
+    Running sh target/bin/oneoff attached to terminal... up, run.1
+    OneOffProcess executed.
 
-#### Scheduled processes
+## Using the Scheduler Add-On
 
-Scheduled processes can be run with the [scheduler add-on](http://addons.heroku.com/scheduler). Start by adding the scheduler add-on to your application:
+One-off processes can be started automatically on a schedule by using the [scheduler add-on](http://addons.heroku.com/scheduler). Start by adding the scheduler add-on to your application:
 
     :::term
     $ heroku addons:add scheduler
-    -----> Adding scheduler to strong-night-1577... done, v4 (free)
+    -----> Adding scheduler to empty-fire-9222... done, v4 (free)
 
 Then you can manage your scheduled tasks from the scheduler web console. Open the web console:
 
     :::term
     $ heroku addons:open scheduler
 
-The web console will allow you to specify the command to run for your scheduled process and the frequency with which you'd like it to run.
+The web console will allow you to specify the command to run for your one-off process and the frequency with which you'd like it to run.
+
+## Scheduling One-Off Processes Versus Running Worker Processes
+
+Scheduling one-off processes is a good way to perform admin tasks such as clearing a cache or triggering the creation of a report that is sent over email. These types of events happen infrequently and don't need to scale up or down.
+
+Worker processes are good for processing work that is being queued up by a front-end web process or by other worker processes. The workload may vary depending on the traffic to your app and you can scale up the number of workers so you can perform more work in parallel. You can also use a worker process if you simply need to process events more frequently than every 10 minutes.
