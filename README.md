@@ -1,15 +1,14 @@
-# Run non-web Java application on Heroku
+# Run non-web Java processes on Heroku
 
-Some applications can benifit from splitting logic into multiple components:
+Some applications can benefit from splitting logic into multiple components:
 
-1. A web component that is consumed by the end-user
-2. One or more non-web components or background processes to supplement the web component.
+1. A web process that is consumed by the end-user
+2. One or more non-web processes to perform background and admin tasks.
 
-A non-web component of your application can be executed in three different contexts within Heroku:
+A non-web process can be either:
 
-1. A long running application called a [Worker](http://devcenter.heroku.com/articles/process-model#mapping_the_unix_process_model_to_web_apps), that is waiting on events (either on a database or from a message queue)
-2. A scheduled Java application that is invoked through the [Heroku Scheduler](http://addons.heroku.com/scheduler)
-3. A [one time admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps)
+1. A long running process called a [Worker](http://devcenter.heroku.com/articles/process-model#mapping_the_unix_process_model_to_web_apps), that is waiting on events (either on a database or from a message queue)
+2. A [one-off admin process](http://devcenter.heroku.com/articles/oneoff-admin-ps) which can be invoked manually from the command line or from a service like the [Heroku Scheduler](http://addons.heroku.com/scheduler)
 
 
 ## Prerequisites
@@ -17,162 +16,84 @@ A non-web component of your application can be executed in three different conte
 * Basic Java knowledge, including an installed version of the JVM and Maven.
 * Basic Git knowledge, including an installed version of Git.
 
-## Components of a Java worker process
+## Sample Application
 
-A non-web Java application worker on Heroku comprises of 3 parts:
+A simple app that demonstrates the one-off and worker process types can be created as two simple Java classes and a build file:
 
-1. Application code
-2. A Maven build file (`pom.xml`) that defines the dependencies and how to assemble the application
-3. A Procfile defining how the process is launched
+    sampleapp/
+      pom.xml
+      src/
+        main/
+          java/
+            OneOffProcess.java
+            WorkerProcess.java
 
+### src/main/java/OneOffProcess.java
 
-## Create an application if you don't already have one
-
-Create a simple Java application using mvn archetype:create:
-
-    :::term
-    $ mvn archetype:create -DgroupId=com.heroku.javaworker -DartifactId=herokujavaworker
-
-This should create the project directories, your "pom.xml" and the associated test directories. Your project folder structure will look like this:
-
-    │   pom.xml
-    │
-    └───src
-        ├───main
-        │   └───java
-        │       └───com
-        │           └───heroku
-        │               └───javaworker
-        └───test
-        |   └───java
-        │       └───com
-        │           └───heroku
-        │               └───javaworker
-        
-
-A class called `App.Java` is also created which serves as the main entry point for your application. 
-
-## Worker processes on Heroku
-
-For your application to run as a "worker" process your Java class would look like:
-
-    :::java
-    package com.heroku.javaworker;
-    
-    /**
-     * Java worker
-     *
-     */
-    public class JavaWorker 
+    public class OneOffProcess 
     {
-        public static void main( String[] args )
+        public static void main(String[] args)
         {
-            try{
-    
-                //initializeApplication
-    
-                while(true){
-    
-                    //getTriggeringEvent
-    
-                    //performApplicationLogic
-    
-                }
-            }catch(RuntimeException ex){
-    
-                //tryToHandleTheError
-    
-                //If error is not expected
-                //System.exit(APP_ERROR_CODE);
-    
-            }finally{
-                //Do any aplication cleanup (closing db connections etc.)
-            }
+            System.out.println("OneOffProcess executed.");
         }    
-    
-    }
-    
-The important thing to note here is that the application doesn't exit. Under normal circumstances worker processes should continue to run.
-
-## Scheduled and one off admin processes on Heroku
-
-For your application to run as a scheduled or one off admin process your  Java class would look like:
-
-    :::java
-    package com.heroku.javaworker;
-    
-    /**
-     * Scheduled Java
-     *
-     */
-    public class ScheduledOrAdminJavaApp 
-    {
-        public static void main( String[] args )
-        {
-            try{
-    
-                //initializeApplication
-    
-                //performApplicationLogic
-    
-            }catch(RuntimeException ex){
-    
-                //tryToHandleTheError
-    
-                //If error is not expected
-                //System.exit(APP_ERROR_CODE);
-    
-            }finally{
-    
-                //Do any aplication cleanup (closing db connections etc.)
-    
-            }
-        }    
-    
     }
 
-## Configuring Maven
+### src/main/java/WorkerProcess.java
 
+    public class WorkerProcess 
+    {
+        public static void main(String[] args)
+        {
+            while(true) {
+            	try { 
+            	    Thread.sleep(1000);
+                } catch(InterruptedException e) {}
+                System.out.println("Worker process woke up");
+            }
+        }    
+    }
+    
+### pom.xml
 
-You can now open your `pom.xml` and add any dependencies to your Java application. In addition add the [Maven appassembler](http://mojo.codehaus.org/appassembler/appassembler-Maven-plugin/) plugin to the `pom.xml`:
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+      <modelVersion>4.0.0</modelVersion>
 
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-            <artifactId>appassembler-Maven-plugin</artifactId>
-            <version>1.1.1</version>
-    	    <configuration> 
-      		  <assembleDirectory>target</assembleDirectory> 
-      		  <programs>
-      			  <program>
-      				  <mainClass>com.heroku.javaworker.JavaWorker</mainClass>
-      				  <name>java-worker</name>
-      			  </program>
-          		  <program>
-      				  <mainClass>com.heroku.javaworker.ScheduledOrAdminJavaApp</mainClass>
-      				  <name>scheduled-java</name>
-      			  </program>
-      		  </programs>
-    	    </configuration>
-        	<executions>
-        		<execution>
-        			<phase>package</phase>
-        			<goals>
-        				<goal>assemble</goal>
-        			</goals>
-        		</execution>  			
-        	</executions>
-        </plugin>
-      </plugins>
-    </build>
+      <groupId>org.example</groupId>
+      <artifactId>herokujavasample</artifactId>
+      <version>1.0-SNAPSHOT</version>
 
-The app assembler plugin generates a convenient launch script for starting your application.
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+              <artifactId>appassembler-maven-plugin</artifactId>
+              <version>1.1.1</version>
+              <configuration> 
+                <assembleDirectory>target</assembleDirectory> 
+                <programs>
+                    <program>
+                        <mainClass>WorkerProcess</mainClass>
+                        <name>worker</name>
+                    </program>
+                    <program>
+                        <mainClass>OneOffProcess</mainClass>
+                        <name>oneoff</name>
+                    </program>
+                </programs>
+              </configuration>
+              <executions>
+                  <execution>
+                      <phase>package</phase><goals><goal>assemble</goal></goals>
+                  </execution>            
+              </executions>
+          </plugin>
+        </plugins>
+      </build>  
 
-Note that the mainClass tag points to the class that launches the application. In the application described above that is `JavaWorker.java`, but it would need to be changed for another application.
+    </project>
 
-As shown above a single `pom.xml` can define multiple worker, scheduled, or admin processes. Now that the application is ready to be run as a worker any other business logic can be added as long as it is bootstrapped from the main class. 
-
+The app assembler plugin generates a convenient launch script for starting your application. A single `pom.xml` can define multiple web, worker or admin processes. 
 
 ## Run your Application
 
@@ -181,19 +102,22 @@ To build your application simply run:
     :::term
     $ mvn package
 
-This compiles your Java classes and also generates a script called "app.sh" that you can use to run your Java application. To run the application use the command:
+Run the worker with:
 
     :::term
-    $ sh target/bin/java-worker
-    worker application running...
+    $ sh target/bin/worker
+    Worker process woke up
+    Worker process woke up
+    Worker process woke up
+    ...
+
+(use `target\bin\worker.bat` on Windows). Run the one-off process with:
+
+    :::term
+    $ sh target/bin/oneoff
+    OneOffProcess executed.
     
-If you are a windows users, you can do:
-
-    :::term
-    C:\YourProject>target\bin\java-worker.bat
-    worker application running...
-
-That's it. You are now ready to deploy this Java application to Heroku.
+That's it. You are now ready to deploy to Heroku.
 
 # Deploy your Application to Heroku
 
@@ -203,6 +127,8 @@ You declare how you want your application executed in `Procfile` in the project 
 
     :::term
     worker: sh target/bin/java-worker
+
+There is no need to add one-off processes to Procfile because these processes are not managed by Heroku.
     
 ## Deploy to Heroku
 

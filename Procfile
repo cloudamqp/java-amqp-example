@@ -1,1 +1,1 @@
-worker: sh target/bin/java-worker
+worker: sh target/bin/worker
