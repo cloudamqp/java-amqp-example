@@ -1,5 +1,7 @@
 package com.heroku;
 
+import java.io.File;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import com.google.gson.Gson;
@@ -11,6 +13,8 @@ public class ShareAppWorker {
 	public static void main(String[] args) throws InterruptedException {
         java.net.URL url = ClassLoader.getSystemResource("known_hosts");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>known_hosts="+url);
+        File knownHostsFile = new File(ClassLoader.getSystemResource("known_hosts").getFile());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>known_hosts file="+knownHostsFile);
         JedisPool pool = poolFactory.getPool();
         Jedis jedis = pool.getResource();
         while(true) {
