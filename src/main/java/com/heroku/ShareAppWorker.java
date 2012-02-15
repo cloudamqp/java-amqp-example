@@ -9,6 +9,8 @@ public class ShareAppWorker {
 	private static JedisPoolFactory poolFactory = new JedisPoolFactory();
     
 	public static void main(String[] args) throws InterruptedException {
+        java.net.URL url = ClassLoader.getSystemResource("known_hosts");
+        System.out.println(url);
         JedisPool pool = poolFactory.getPool();
         Jedis jedis = pool.getResource();
         while(true) {
