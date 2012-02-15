@@ -10,7 +10,7 @@ public class ShareAppWorker {
     
 	public static void main(String[] args) throws InterruptedException {
         java.net.URL url = ClassLoader.getSystemResource("known_hosts");
-        System.out.println(url);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>known_hosts="+url);
         JedisPool pool = poolFactory.getPool();
         Jedis jedis = pool.getResource();
         while(true) {
