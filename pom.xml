@@ -22,17 +22,17 @@
 	<dependency>
 	    <groupId>com.heroku.api</groupId>
 	    <artifactId>heroku-api</artifactId>
-	    <version>0.1-SNAPSHOT</version>
+	    <version>0.2</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.heroku.api</groupId>
 	    <artifactId>heroku-json-gson</artifactId>
-	    <version>0.1-SNAPSHOT</version>
+	    <version>0.2</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.heroku.api</groupId>
 	    <artifactId>heroku-http-apache</artifactId>
-	    <version>0.1-SNAPSHOT</version>
+	    <version>0.2</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.eclipse.jgit</groupId>
