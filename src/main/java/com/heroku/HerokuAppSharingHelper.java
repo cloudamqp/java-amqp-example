@@ -23,7 +23,9 @@ import org.eclipse.jgit.lib.RepositoryBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
@@ -73,9 +75,13 @@ public class HerokuAppSharingHelper {
             String sshPublicKey = new String(publicKeyOutputStream.toByteArray());
             
             // copy the known_hosts file to the .ssh dir
-            File knownHostsFile = new File("known_hosts");
+            String knownHostsFileName = System.getProperty("java.io.tmpdir") + File.separator + "known_hosts_"+emailAddress.hashCode();
+            PrintWriter writer = new PrintWriter(new FileOutputStream(knownHostsFileName));
+            writer.println("heroku.com,50.19.85.132 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAu8erSx6jh+8ztsfHwkNeFr/SZaSOcvoa8AyMpaerGIPZDB2TKNgNkMSYTLYGDK2ivsqXopo2W7dpQRBIVF80q9mNXy5tbt1WE04gbOBB26Wn2hF4bk3Tu+BNMFbvMjPbkVlC2hcFuQJdH4T2i/dtauyTpJbD/6ExHR9XYVhdhdMs0JsjP/Q5FNoWh2ff9YbZVpDQSTPvusUp4liLjPfa/i0t+2LpNCeWy8Y+V9gUlDWiyYwrfMVI0UwNCZZKHs1Unpc11/4HLitQRtvuk0Ot5qwwBxbmtvCDKZvj1aFBid71/mYdGRPYZMIxq1zgP1acePC1zfTG/lvuQ7d0Pe0kaw==");
+            writer.close();
+            File knownHostsFile = new File(knownHostsFileName);
             FileUtils.copyFileToDirectory(knownHostsFile, fakeUserHomeSshDir);
-
+            knownHostsFile.delete();
             // add the key pair to ${HEROKU_USERNAME}
             KeyAdd keyAdd = new KeyAdd(sshPublicKey);
             Unit keyAddResponse = herokuConnection.execute(keyAdd);
