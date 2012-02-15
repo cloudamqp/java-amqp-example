@@ -81,7 +81,6 @@ public class HerokuAppSharingHelper {
             //writer.close();
             File knownHostsFile = new File("src/main/resources/known_hosts");
             FileUtils.copyFileToDirectory(knownHostsFile, fakeUserHomeSshDir);
-            knownHostsFile.delete();
             // add the key pair to ${HEROKU_USERNAME}
             KeyAdd keyAdd = new KeyAdd(sshPublicKey);
             Unit keyAddResponse = herokuConnection.execute(keyAdd);
