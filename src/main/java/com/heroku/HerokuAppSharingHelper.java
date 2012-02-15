@@ -73,7 +73,7 @@ public class HerokuAppSharingHelper {
             String sshPublicKey = new String(publicKeyOutputStream.toByteArray());
             
             // copy the known_hosts file to the .ssh dir
-            File knownHostsFile = new File(ClassLoader.getSystemResource("known_hosts").getFile());
+            File knownHostsFile = new File("known_hosts");
             FileUtils.copyFileToDirectory(knownHostsFile, fakeUserHomeSshDir);
 
             // add the key pair to ${HEROKU_USERNAME}
