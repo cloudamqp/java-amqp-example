@@ -21,7 +21,7 @@ public class ShareAppWorker {
             String appToClone = jedis.lpop("queue");  
            if(appToClone!=null){
             	AppCloneRequest request = new Gson().fromJson(appToClone, AppCloneRequest.class);
-            	System.out.println(String.format("Received app to clone: Owner Emai:%s,Git URL:%s",request.emailAddress,request.gitUrl));
+            	System.out.println(String.format("Received app to clone: Id:%s,Owner Emai:%s,Git URL:%s",request.id,request.emailAddress,request.gitUrl));
             	HerokuAppSharingHelper helper = new HerokuAppSharingHelper(request.emailAddress,request.gitUrl);
             	try {
 					App clonedApp = helper.cloneApp();

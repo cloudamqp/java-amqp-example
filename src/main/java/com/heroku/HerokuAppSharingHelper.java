@@ -74,11 +74,6 @@ public class HerokuAppSharingHelper {
             publicKeyOutputStream.close();
             String sshPublicKey = new String(publicKeyOutputStream.toByteArray());
             
-            // copy the known_hosts file to the .ssh dir
-            //String knownHostsFileName = System.getProperty("java.io.tmpdir") + File.separator + "known_hosts_"+emailAddress.hashCode();
-           // PrintWriter writer = new PrintWriter(new FileOutputStream(knownHostsFileName));
-            //writer.println("heroku.com,50.19.85.132 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAu8erSx6jh+8ztsfHwkNeFr/SZaSOcvoa8AyMpaerGIPZDB2TKNgNkMSYTLYGDK2ivsqXopo2W7dpQRBIVF80q9mNXy5tbt1WE04gbOBB26Wn2hF4bk3Tu+BNMFbvMjPbkVlC2hcFuQJdH4T2i/dtauyTpJbD/6ExHR9XYVhdhdMs0JsjP/Q5FNoWh2ff9YbZVpDQSTPvusUp4liLjPfa/i0t+2LpNCeWy8Y+V9gUlDWiyYwrfMVI0UwNCZZKHs1Unpc11/4HLitQRtvuk0Ot5qwwBxbmtvCDKZvj1aFBid71/mYdGRPYZMIxq1zgP1acePC1zfTG/lvuQ7d0Pe0kaw==");
-            //writer.close();
             File knownHostsFile = new File("src/main/resources/known_hosts");
             FileUtils.copyFileToDirectory(knownHostsFile, fakeUserHomeSshDir);
             // add the key pair to ${HEROKU_USERNAME}
