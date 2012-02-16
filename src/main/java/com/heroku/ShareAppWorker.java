@@ -25,12 +25,16 @@ public class ShareAppWorker {
             	HerokuAppSharingHelper helper = new HerokuAppSharingHelper(request.emailAddress,request.gitUrl);
             	try {
 					App clonedApp = helper.cloneApp();
+					request.appName=clonedApp.getName();
+					request.appUrl=clonedApp.getWebUrl();
+					request.appGitUrl=clonedApp.getGitUrl();
+					DBUtils.updateDB(request);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
-            Thread.sleep(200);
+            Thread.sleep(1000);
         }
         
         

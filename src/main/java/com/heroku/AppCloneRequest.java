@@ -1,5 +1,7 @@
 package com.heroku;
 
+import com.heroku.api.App;
+
 
 public class AppCloneRequest {
 	public AppCloneRequest(String emailAddress, String gitUrl,String status) {
@@ -12,4 +14,7 @@ public class AppCloneRequest {
 	public String gitUrl;
 	public long id;
 	public String status;
+	public String appName;
+	public String appUrl;
+	public String appGitUrl;;
 }
