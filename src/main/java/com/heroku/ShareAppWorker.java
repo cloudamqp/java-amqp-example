@@ -25,9 +25,9 @@ public class ShareAppWorker {
            if(appToClone!=null){
             	AppCloneRequest cloneReq = new Gson().fromJson(appToClone, AppCloneRequest.class);
             	System.out.println(String.format("Received app to clone: Id:%s,Owner Emai:%s,Git URL:%s",cloneReq.id,cloneReq.emailAddress,cloneReq.gitUrl));
-            	//HerokuAppSharingHelper helper = new HerokuAppSharingHelper(cloneReq.emailAddress,cloneReq.gitUrl);
+            	HerokuAppSharingHelper helper = new HerokuAppSharingHelper(cloneReq.emailAddress,cloneReq.gitUrl);
             	try {
-					App clonedApp = new App();//helper.cloneApp();
+					App clonedApp = helper.cloneApp();
 			        List<String> request = jedis.hmget(cloneReq.id,"id","email","appName","appUrl","appGitUrl","status");
 			        System.out.println(String.format("[Requested By:%s] - %s : Got Redis Hash [id=%s] ",request.get(1),"FETREQ",request.get(0)));
 				    Map<String,String> updtReq = new HashMap<String,String>();
