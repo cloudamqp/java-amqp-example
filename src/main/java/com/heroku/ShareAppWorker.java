@@ -25,23 +25,20 @@ public class ShareAppWorker {
            if(appToClone!=null){
             	AppCloneRequest cloneReq = new Gson().fromJson(appToClone, AppCloneRequest.class);
             	System.out.println(String.format("Received app to clone: Id:%s,Owner Emai:%s,Git URL:%s",cloneReq.id,cloneReq.emailAddress,cloneReq.gitUrl));
-            	HerokuAppSharingHelper helper = new HerokuAppSharingHelper(cloneReq.emailAddress,cloneReq.gitUrl);
+            	//HerokuAppSharingHelper helper = new HerokuAppSharingHelper(cloneReq.emailAddress,cloneReq.gitUrl);
             	try {
-					App clonedApp = helper.cloneApp();
-			        List<String> fields = new ArrayList<String>();
-			        fields.add("email");
-			        fields.add("appUrl");
-			        fields.add("appGitUrl");
-			        fields.add("id");
-			        List<String> request = jedis.hmget(cloneReq.id,"id","email","appUrl","appGitUrl","status");
+					App clonedApp = new App();//helper.cloneApp();
+			        List<String> request = jedis.hmget(cloneReq.id,"id","email","appName","appUrl","appGitUrl","status");
 			        System.out.println(String.format("[Requested By:%s] - %s : Got Redis Hash [id=%s] ",request.get(1),"FETREQ",request.get(0)));
 				    Map<String,String> updtReq = new HashMap<String,String>();
 			        updtReq.put("id", request.get(0));
 			        updtReq.put("email",request.get(1));
-			        updtReq.put("appName",clonedApp.getName());
-			        updtReq.put("appUrl",clonedApp.getWebUrl());
-			        updtReq.put("appGitUrl", clonedApp.getGitUrl());
-				      jedis.hmset(request.get(0), updtReq);
+			        updtReq.put("appName",clonedApp.getName()==null?"test-app-name":clonedApp.getName());
+			        updtReq.put("appUrl",clonedApp.getWebUrl()==null?"http://testapp.herokuapp.com":clonedApp.getWebUrl());
+			        updtReq.put("appGitUrl", clonedApp.getGitUrl()==null?"git@heroku.com...":clonedApp.getGitUrl());
+			        updtReq.put("status", "complete");
+			        
+				    jedis.hmset(request.get(0), updtReq);
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
