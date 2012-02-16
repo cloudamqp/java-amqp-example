@@ -39,7 +39,8 @@ public class ShareAppWorker {
 			        updtReq.put("status", "complete");
 			        
 				    jedis.hmset(request.get(0), updtReq);
-
+				    System.out.println(String.format("[Requested By:%s] - %s : Updated Redis Hash [id=%s] ",request.get(1),"REQCMP",request.get(0)));
+				    
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
