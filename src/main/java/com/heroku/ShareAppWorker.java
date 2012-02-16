@@ -34,7 +34,8 @@ public class ShareAppWorker {
 			        fields.add("appGitUrl");
 			        fields.add("id");
 			        List<String> request = jedis.hmget(cloneReq.id,"id","email","appUrl","appGitUrl","status");
-			        Map<String,String> updtReq = new HashMap<String,String>();
+			        System.out.println(String.format("[Requested By:%s] - %s : Got Redis Hash [id=%s] ",request.get(1),"FETREQ",request.get(0)));
+				    Map<String,String> updtReq = new HashMap<String,String>();
 			        updtReq.put("id", request.get(0));
 			        updtReq.put("email",request.get(1));
 			        updtReq.put("appName",clonedApp.getName());
