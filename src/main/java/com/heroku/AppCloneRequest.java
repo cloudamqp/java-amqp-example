@@ -12,7 +12,7 @@ public class AppCloneRequest {
 	}
 	public String emailAddress;
 	public String gitUrl;
-	public long id;
+	public String id;
 	public String status;
 	public String appName;
 	public String appUrl;
