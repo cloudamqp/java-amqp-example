@@ -1,6 +1,6 @@
 # Use CloudAMQP in Java from Heroku
 
-This project is a fork of [](). It illustrates how to use the [Java client AMQP library]() to access [CloudAMQP](http://www.cloudamqp.com) from [Heroku](http://www.heroku.com). 
+This project illustrates how to use the [Java client AMQP library]() to access [CloudAMQP](http://www.cloudamqp.com) from [Heroku](http://www.heroku.com). 
 
 It consists of one [worker](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which listens to a queue and prints the messages to the console (and thus to the Heroku log), and a ["oneoff" process](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which enqeues messages to that queue. 
 
@@ -8,9 +8,18 @@ For more information on AMQP and how to use it from Java, see [RabbitMQ's tutori
 
 ## Usage
 
+Clone this repo, create a heroku application, add the [CloudAMQP addon](http://addons.heroku.com/cloudamqp), push the app to Heroku, start a worker (it's free), run the "one off" process, inspect the log. 
+
     $ git clone git://github.com/cloudamqp/java-amqp-example.git
 
     $ heroku create --stack cedar
+    Creating growing-spring-2298... done, stack is cedar
+    http://growing-spring-2298.herokuapp.com/ | git@heroku.com:growing-spring-2298.git
+    Git remote heroku added
+
+    $ heroku addons:add cloudamqp:test
+    ----> Adding cloudamqp:test to growing-spring-2298... done, v5 (free)
+
     $ git push heroku master
     Counting objects: 388, done.
     Delta compression using up to 4 threads.
@@ -23,13 +32,13 @@ For more information on AMQP and how to use it from Java, see [RabbitMQ's tutori
 
     ...build output...
 
-    $ heroku addons:add cloudamqp:test
-    ----> Adding cloudamqp:test to growing-spring-2298... done, v5 (free)
     $ heroku scale worker=1
     Scaling worker processes... done, now running 1
+
     $ heroku run "target/bin/oneoff"
     Running sh target/bin/oneoff attached to terminal... up, run.1
      [x] Sent 'Hello CloudAMQP!'
+
     $ heroku logs
     2012-03-28T16:59:59+00:00 app[worker.1]:  [*] Waiting for messages
     2012-03-28T17:02:34+00:00 heroku[api]: Scale to worker=1 by carl.hoerberg@gmail.com
