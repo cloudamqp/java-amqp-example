@@ -17,8 +17,8 @@ Clone this repo, create a heroku application, add the [CloudAMQP addon](http://a
     http://growing-spring-2298.herokuapp.com/ | git@heroku.com:growing-spring-2298.git
     Git remote heroku added
 
-    $ heroku addons:add cloudamqp:test
-    ----> Adding cloudamqp:test to growing-spring-2298... done, v5 (free)
+    $ heroku addons:add cloudamqp:lemur
+    ----> Adding cloudamqp:lemur to growing-spring-2298... done, v5 (free)
 
     $ git push heroku master
     Counting objects: 388, done.
@@ -35,7 +35,7 @@ Clone this repo, create a heroku application, add the [CloudAMQP addon](http://a
     $ heroku scale worker=1
     Scaling worker processes... done, now running 1
 
-    $ heroku run "target/bin/oneoff"
+    $ heroku run "sh target/bin/oneoff"
     Running sh target/bin/oneoff attached to terminal... up, run.1
      [x] Sent 'Hello CloudAMQP!'
 
