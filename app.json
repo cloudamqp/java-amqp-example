@@ -1,0 +1,10 @@
+{
+  "name": "Java CloudAMQP Sample App",
+  "description": "This project illustrates how to use the Java client AMQP library to access CloudAMQP from Heroku",
+  "repository": "https://github.com/cloudamqp/java-amqp-example",
+  "logo": "http://www.cloudamqp.com/images/rabbit_256.png",
+  "keywords": ["java", "amqp", "cloudamqp", "rabbitmq"],
+  "addons": [
+	"cloudamqp"
+  ]
+}
