@@ -12,6 +12,8 @@ public class WorkerProcess {
 
     ConnectionFactory factory = new ConnectionFactory();
     factory.setUri(uri);
+    factory.setRequestedHeartbeat(30);
+    factory.setConnectionTimeout(30);
     Connection connection = factory.newConnection();
     Channel channel = connection.createChannel();
 
