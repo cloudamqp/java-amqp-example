@@ -11,8 +11,7 @@ public class OneOffProcess {
     if (uri == null) uri = "amqp://guest:guest@localhost";
     ConnectionFactory factory = new ConnectionFactory();
     factory.setUri(uri);
-    factory.setRequestedHeartbeat(30);
-    factory.setConnectionTimeout(30);
+    factory.setConnectionTimeout(30000);
     Connection connection = factory.newConnection();
     Channel channel = connection.createChannel();
 
