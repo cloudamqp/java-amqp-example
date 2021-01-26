@@ -1,7 +1,7 @@
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.QueueingConsumer;
+import com.rabbitmq.client.DeliverCallback;
 
 public class WorkerProcess {
   private final static String QUEUE_NAME = "hello";
@@ -19,13 +19,10 @@ public class WorkerProcess {
     channel.queueDeclare(QUEUE_NAME, false, false, false, null);
     System.out.println(" [*] Waiting for messages");
 
-    QueueingConsumer consumer = new QueueingConsumer(channel);
-    channel.basicConsume(QUEUE_NAME, true, consumer);
-
-    while (true) {
-      QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-      String message = new String(delivery.getBody());
+    DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+      String message = new String(delivery.getBody(), "UTF-8");
       System.out.println(" [x] Received '" + message + "'");
-    }
+    };
+    channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
   }
 }
