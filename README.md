@@ -12,10 +12,12 @@ The targeted JAVA version is 8 and the project can be packaged with Maven using:
 mvn clean package
 
 In order to run locally, start two terminals and in the first run:
-java -cp target/amqpexample-1.0-SNAPSHOT.jar WorkerProcess
+
+    java -cp target/amqpexample-1.0-SNAPSHOT.jar WorkerProcess
 
 In the other, execute:
-java -cp target/amqpexample-1.0-SNAPSHOT.jar OneOffProcess
+
+    java -cp target/amqpexample-1.0-SNAPSHOT.jar OneOffProcess
 
 in order to publish messages to the Worker.
 
