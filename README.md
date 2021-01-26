@@ -1,12 +1,25 @@
 # Use CloudAMQP in Java from Heroku
 
-This project illustrates how to use the [Java client AMQP library]() to access [CloudAMQP](http://www.cloudamqp.com) from [Heroku](http://www.heroku.com). 
+This project illustrates how to use the [Java client AMQP library]() to access [CloudAMQP](http://www.cloudamqp.com) from [Heroku](http://www.heroku.com).
 
-It consists of one [worker](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which listens to a queue and prints the messages to the console (and thus to the Heroku log), and a ["oneoff" process](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which enqeues messages to that queue. 
+It consists of one [worker](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which listens to a queue and prints the messages to the console (and thus to the Heroku log), and a ["oneoff" process](https://github.com/cloudamqp/java-amqp-example/blob/master/src/main/java/WorkerProcess.java) which enqeues messages to that queue.
 
-For more information on AMQP and how to use it from Java, see [RabbitMQ's tutorial](http://www.rabbitmq.com/getstarted.html). 
+For more information on AMQP and how to use it from Java, see [RabbitMQ's tutorial](http://www.rabbitmq.com/getstarted.html).
 
 ## Usage
+
+The targeted JAVA version is 8 and the project can be packaged with Maven using:
+mvn clean package
+
+In order to run locally, start two terminals and in the first run:
+
+    java -cp target/amqpexample-1.0-SNAPSHOT.jar WorkerProcess
+
+In the other, execute:
+
+    java -cp target/amqpexample-1.0-SNAPSHOT.jar OneOffProcess
+
+in order to publish messages to the Worker.
 
 Click this button to deploy the sample code to a new app on Heroku for free:
 
@@ -30,4 +43,3 @@ Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed
     2012-03-28T17:03:07+00:00 app[worker.1]:  [x] Received 'Hello CloudAMQP!'
     2012-03-28T17:03:08+00:00 heroku[run.1]: Process exited with status 0
     2012-03-28T17:03:08+00:00 heroku[run.1]: State changed from up to complete
-
