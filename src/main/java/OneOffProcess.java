@@ -8,7 +8,8 @@ public class OneOffProcess {
 
   public static void main(String[] args) throws Exception {
     String uri = System.getenv("CLOUDAMQP_URL");
-    if (uri == null) uri = "amqp://guest:guest@localhost";
+    if (uri == null)
+      uri = "amqp://guest:guest@localhost";
     ConnectionFactory factory = new ConnectionFactory();
     factory.setUri(uri);
     factory.setConnectionTimeout(30000);
@@ -22,5 +23,5 @@ public class OneOffProcess {
 
     channel.close();
     connection.close();
-  }    
+  }
 }
